@@ -1,2 +1,4 @@
 class Board < ApplicationRecord
+  has_many :todos
+  validates :title, :presence => true
 end
