@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/api/v1/boards":
+  "/v1/boards":
     post:
       summary: Creates a board
       tags:
@@ -13,7 +13,16 @@ paths:
       responses:
         '200':
           description: board created
-          content: {}
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/BoardCreated"
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorsObject"
       requestBody:
         content:
           application/json:
@@ -31,3 +40,24 @@ servers:
   variables:
     defaultHost:
       default: www.example.com
+components:
+  schemas:
+    BoardCreated:
+      type: object
+      properties:
+        board:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            description:
+              type: string
+    ErrorsObject:
+      type: object
+      properties:
+        status:
+          type: integer
+        errors:
+          type: object

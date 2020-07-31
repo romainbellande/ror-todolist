@@ -31,7 +31,35 @@ RSpec.configure do |config|
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          BoardCreated: {
+            type: 'object',
+            properties: {
+              board: {
+                type: 'object',
+                properties: {
+                  id: { type: 'integer' },
+                  title: { type: 'string' },
+                  description: { type: 'string', nullable: true }
+                }
+              }
+            }
+          },
+          ErrorsObject: {
+            type: 'object',
+            properties: {
+              status: {
+                type: 'integer'
+              },
+              errors: {
+                type: 'object'
+              }
+            }
+          }
+        }
+      }
     }
   }
 

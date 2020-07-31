@@ -9,7 +9,7 @@ class V1::BoardsController < ApplicationController
 
   def index
     @boards = Board.paginate(page: params[:page])
-    render json: @boards, include: params[:include]
+    render json: @boards, include: params[:include], meta: pagination_dict(@boards)
   end
 
   def show
@@ -19,10 +19,10 @@ class V1::BoardsController < ApplicationController
   def create
     @board = Board.new(board_params)
 
-    if @board.save!
+    if @board.save
       render json: @board
     else
-      render errors: { error: 'Unable to create board.' }, status: 400
+      render json: { status: 400, errors: @board.errors }, status: 400
     end
   end
 
@@ -52,16 +52,17 @@ class V1::BoardsController < ApplicationController
   end
 
   def board_params
-    params.require(:board).permit(:board, :title, :description)
+    ActionController::Parameters.permit_all_parameters = true
+    # return ActionController::Parameters.new
+    return params.require(:board).permit(:title, :description, :board)
   end
 
-  # def pagination_dict(collection)
-  #   {
-  #     current_page: collection.current_page,
-  #     next_page: collection.next_page,
-  #     prev_page: collection.prev_page, # use collection.previous_page when using will_paginate
-  #     total_pages: collection.total_pages,
-  #     total_count: collection.total_count
-  #   }
-  # end
+  def pagination_dict(collection)
+    {
+      current_page: collection.current_page,
+      per_page: collection.per_page, # use collection.previous_page when using will_paginate
+      total_pages: collection.total_pages,
+      total_count: collection.total_entries
+    }
+  end
 end
