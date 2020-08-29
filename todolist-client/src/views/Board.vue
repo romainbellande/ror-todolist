@@ -1,7 +1,7 @@
 <template>
   <div class="list-container">
     <v-board-list
-      v-bind:lists="lists"
+      v-bind:lists="board.lists"
       v-on:details="onDetails"
       @change="onListsChange"
       >TODO</v-board-list
@@ -31,6 +31,9 @@ export default {
     };
   },
   computed: {
+    board() {
+      return this.$store.getters.getBoard(this.$route.params.id);
+    },
     selectedTodo() {
       if (this.selectedListindex === null || this.selectedTodoIndex === null) {
         return null;

@@ -27,7 +27,9 @@
     </v-card>
   </v-dialog>
   <v-card v-else class="card" max-width="400">
-    <slot></slot>
+    <router-link :to="link">
+      <slot></slot>
+    </router-link>
   </v-card>
 </template>
 
@@ -43,6 +45,10 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    link: {
+      type: String,
+      required: true
     }
   }
 };
@@ -55,6 +61,13 @@ export default {
   cursor: pointer;
   margin: 0 7px;
   padding: 10px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    display: block;
+  }
 
   &.card-create {
     display: flex;

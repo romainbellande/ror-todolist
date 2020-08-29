@@ -5,7 +5,7 @@
     </v-card-title>
     <div v-click-outside="onFocusOut">
       <v-card
-        v-for="(card, index) in lists[0].items"
+        v-for="(card, index) in lists[0].todos"
         v-bind:key="index"
         class="card"
         @click.stop="$emit('details', 0, index)"
